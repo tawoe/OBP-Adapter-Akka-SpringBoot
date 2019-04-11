@@ -4,7 +4,8 @@ import java.util.Date
 
 import akka.actor.Actor
 import com.openbankproject.akka.springboot.adapter.service.BankService
-import com.openbankproject.commons.dto.{InboundAdapterInfo, InboundCheckBankAccountExists, InboundGetAccount, InboundGetBank, InboundGetBanks, InboundGetCoreBankAccounts, OutboundCheckBankAccountExists, OutboundGetAdapterInfo, OutboundGetBank, OutboundGetBanks, OutboundGetCoreBankAccounts, InboundAccount}
+import com.openbankproject.commons.dto.{CallContextAkka, InboundAccount, InboundAdapterInfo, InboundCheckBankAccountExists, InboundGetAccount, InboundGetBank, InboundGetBanks, InboundGetCoreBankAccounts, OutboundCheckBankAccountExists, OutboundGetAdapterInfo, OutboundGetBank, OutboundGetBanks, OutboundGetCoreBankAccounts}
+import com.openbankproject.commons.model.BankIdAccountId
 import javax.annotation.Resource
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.context.annotation.Scope
@@ -32,8 +33,15 @@ class SouthSideActor  extends Actor  {
     case OutboundGetBank(bankId, callContext) => sender ! InboundGetBank(this.bankService.getBankById(bankId), callContext)
     case OutboundGetAdapterInfo(_, callContext) => sender ! InboundAdapterInfo("akka-springBoot", "01", "friday", new Date().toString, callContext)
     case OutboundCheckBankAccountExists(bankId, ccountId,callContext) => sender ! InboundCheckBankAccountExists(bankService.getAccountById(bankId,  callContext.get.userId.get,  ccountId), callContext)
-    case OutboundGetCoreBankAccounts(bankIdAccountIds, callContext) => sender ! InboundGetCoreBankAccounts(bankService.getCoreBankAccounts("bankId002", callContext.get.userId.get), callContext)
+    //case OutboundGetCoreBankAccounts(bankIdAccountIds, callContext) => sender ! InboundGetCoreBankAccounts(bankService.getCoreBankAccounts("bankId002", callContext.get.userId.get), callContext)
+    case OutboundGetCoreBankAccounts(bankIdAccountIds, callContext) => sender ! InboundGetCoreBankAccounts(getCoreBankAccountsAllBanks(bankIdAccountIds, callContext.get), callContext)
   }
+  
+  def getCoreBankAccountsAllBanks(bankIdAccountIds: List[BankIdAccountId], callContext: CallContextAkka ) = {
+    bankIdAccountIds.flatMap( x => bankService.getCoreBankAccounts(x.bankId.toString(), callContext.get.userId.get ))
+  }
+
+ 
 
 }
   

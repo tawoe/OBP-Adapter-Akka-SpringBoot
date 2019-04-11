@@ -123,7 +123,7 @@ class RemoteEndpointApi {
         },
         {
             "id": "${userId}--1234513",
-            "label": "EPARG",
+            "label": "yet another label",
             "bankId": "${bankId}",
             "accountType": "mockedAccount",
             "accountRoutings": [

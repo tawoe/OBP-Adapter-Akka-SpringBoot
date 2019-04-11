@@ -2,6 +2,7 @@ package com.openbankproject.akka.springboot.adapter.service
 
 import com.openbankproject.akka.springboot.adapter.entity.BankAccount
 import com.openbankproject.commons.dto.{InboundAccount, InboundBank, InboundCoreAccount}
+import com.openbankproject.commons.model.BankIdAccountId
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.{GetMapping, PathVariable}
 
@@ -26,7 +27,6 @@ trait BankService {
 
   @GetMapping(Array("/banks/{BANK_ID}/{USER_ID}"))
   def getCoreBankAccounts(@PathVariable("BANK_ID") bankId: String, @PathVariable("USER_ID") userId: String): List[InboundCoreAccount]
-  
   
 }
 
