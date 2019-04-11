@@ -75,8 +75,10 @@ class RemoteEndpointApi {
      "accountType" : "mockedAccount",
      "balanceAmount" : "EUR",
      "balanceCurrency" : "2333",
-     "owners : [ "$userId" ],
-     "viewsToGenerate : ["Owner", "Accountant", "Auditor"],
+     "owners" : [ 
+        "${userId}" 
+        ]   ,
+     "viewsToGenerate" : ["Owner", "Accountant", "Auditor"],
      "bankRoutingScheme" :  "OBP",
      "bankRoutingAddress" : "rbs",
      "branchRoutingScheme" : "none",
@@ -142,4 +144,6 @@ class RemoteEndpointApi {
     def parseJson(jsonStr) {
         new JsonSlurper().parseText(jsonStr)
     }
+    
+    
 }
