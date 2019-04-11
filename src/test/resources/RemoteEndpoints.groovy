@@ -96,7 +96,7 @@ class RemoteEndpointApi {
     @GetMapping(value="/banks/{BANK_ID}/{USER_ID}")
     def getCoreBankAccounts(@PathVariable("BANK_ID") bankId, @PathVariable("USER_ID") userId) {
         parseJson(
-                """{"accounts": 
+                """
         [
         {
             "id": "${userId}--1234511",
@@ -134,8 +134,7 @@ class RemoteEndpointApi {
                 }
             ] 
          } 
-         ] 
-     }"""
+         ]"""
         )
     }
     
