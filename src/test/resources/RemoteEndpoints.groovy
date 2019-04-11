@@ -96,14 +96,13 @@ class RemoteEndpointApi {
     @GetMapping(value="/banks/{BANK_ID}/{USER_ID}")
     def getCoreBankAccounts(@PathVariable("BANK_ID") bankId, @PathVariable("USER_ID") userId) {
         parseJson(
-                """
-        [
+                 """[
         {
             "id": "${userId}--1234511",
             "label": "some label",
-            "bank_id": "${bankId}",
-            "account_type": "mockedAccount",
-            "account_routings": [
+            "bankId": "${bankId}",
+            "accountType": "mockedAccount",
+            "accountRoutings": [
                 {
                     "scheme": "OBP",
                     "address": "whatever"
@@ -113,9 +112,9 @@ class RemoteEndpointApi {
         {
             "id": "${userId}--1234512",
             "label": "another label",
-            "bank_id": "${bankId}",
-            "account_type": "mockedAccount",
-            "account_routings": [
+            "bankId": "${bankId}",
+            "accountType": "mockedAccount",
+            "accountRoutings": [
                 {
                     "scheme": "OBP",
                     "address": "whatever"
@@ -125,9 +124,9 @@ class RemoteEndpointApi {
         {
             "id": "${userId}--1234513",
             "label": "EPARG",
-            "bank_id": "${bankId}",
-            "account_type": "mockedAccount",
-            "account_routings": [
+            "bankId": "${bankId}",
+            "accountType": "mockedAccount",
+            "accountRoutings": [
                 {
                     "scheme": "OBP",
                     "address": "whatever"
