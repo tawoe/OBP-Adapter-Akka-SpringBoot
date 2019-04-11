@@ -4,7 +4,7 @@ import java.util.Date
 
 import akka.actor.Actor
 import com.openbankproject.akka.springboot.adapter.service.BankService
-import com.openbankproject.commons.dto.{InboundGetBank, InboundGetBanks, OutboundGetBank, OutboundGetBanks}
+import com.openbankproject.commons.dto.{InboundAdapterInfo, InboundCheckBankAccountExists, InboundGetAccount, InboundGetBank, InboundGetBanks, InboundGetCoreBankAccounts, OutboundCheckBankAccountExists, OutboundGetAdapterInfo, OutboundGetBank, OutboundGetBanks, OutboundGetCoreBankAccounts, InboundAccount}
 import javax.annotation.Resource
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.context.annotation.Scope
@@ -30,7 +30,10 @@ class SouthSideActor  extends Actor  {
   def receive = {
     case OutboundGetBanks(callContext) => sender ! InboundGetBanks(bankService.getBanks(), callContext)
     case OutboundGetBank(bankId, callContext) => sender ! InboundGetBank(this.bankService.getBankById(bankId), callContext)
-    case message => sender ! mockAdapaterInfo
+    case OutboundGetAdapterInfo(_, callContext) => sender ! InboundAdapterInfo("akka-springBoot", "01", "friday", new Date().toString, callContext)
+    case OutboundCheckBankAccountExists(bankId, ccountId,callContext) => sender ! InboundCheckBankAccountExists(bankService.getAccountById(bankId,  callContext.get.userId.get,  ccountId), callContext)
+    case OutboundGetCoreBankAccounts(bankIdAccountIds, callContext) => sender ! InboundGetCoreBankAccounts(bankService.getCoreBankAccounts("bankId002", callContext.get.userId.get), callContext)
   }
 
 }
+  

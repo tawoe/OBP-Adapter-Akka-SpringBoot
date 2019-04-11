@@ -20,5 +20,7 @@ class BankEndpoint {
 
   @GetMapping(Array("/{BANK_ID}"))
   def getBankById(@PathVariable("BANK_ID") bankId :String) = this.bankService.getBankById(bankId)
+  
+  //@GetMapping(Array("{BANK_ID}/{ACCOUNT_ID}"))
 
 }
