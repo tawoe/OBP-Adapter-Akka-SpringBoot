@@ -23,7 +23,7 @@ trait BankService {
   def getAccounts(@PathVariable("BANK_ID") bankId :String): AccountResult
   
   @GetMapping(Array("/banks/{BANK_ID}/{USER_ID}/{ACCOUNT_ID}"))
-  def getAccountById(@PathVariable("BANK_ID") bankId: String, @PathVariable("{USER_ID}") userId: String , @PathVariable("ACCOUNT_ID") accountId: String): InboundAccount
+  def getAccountById(@PathVariable("BANK_ID") bankId: String, @PathVariable("USER_ID") userId: String , @PathVariable("ACCOUNT_ID") accountId: String): InboundAccount
 
   @GetMapping(Array("/banks/{BANK_ID}/{USER_ID}"))
   def getCoreBankAccounts(@PathVariable("BANK_ID") bankId: String, @PathVariable("USER_ID") userId: String): List[InboundCoreAccount]
