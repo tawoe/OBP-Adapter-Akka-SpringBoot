@@ -32,10 +32,10 @@ class AkkaAdapterApplicationTest{
 
   @Test
   def getBanksTest = {
-    val banks = this.bankService.getBanks()
-    val bank = this.bankService.getBankById("hello-bank-id")
-    System.out.println(banks)
-    System.out.println(bank)
+//    val banks = this.bankService.getBanks()
+//    val bank = this.bankService.getBankById("hello-bank-id")
+//    System.out.println(banks)
+//    System.out.println(bank)
 
   }
 }

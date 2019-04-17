@@ -12,14 +12,14 @@ class BankEndpoint {
   @Resource
   val bankService: BankService = null
 
-  @GetMapping(Array("/account"))
-  def getAll = this.bankService.getAccounts("hello-bank-id")
-
-  @GetMapping()
-  def getAllBanks = this.bankService.getBanks()
-
-  @GetMapping(Array("/{BANK_ID}"))
-  def getBankById(@PathVariable("BANK_ID") bankId :String) = this.bankService.getBankById(bankId)
+//  @GetMapping(Array("/account"))
+//  def getAll = this.bankService.getAccounts("hello-bank-id")
+//
+//  @GetMapping()
+//  def getAllBanks = this.bankService.getBanks()
+//
+//  @GetMapping(Array("/{BANK_ID}"))
+//  def getBankById(@PathVariable("BANK_ID") bankId :String) = this.bankService.getBankById(bankId)
   
   //@GetMapping(Array("{BANK_ID}/{ACCOUNT_ID}"))
 

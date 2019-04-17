@@ -5,7 +5,7 @@ import java.util.Date
 import akka.actor.Actor
 import com.openbankproject.akka.springboot.adapter.service.BankService
 import com.openbankproject.commons.dto._
-import com.openbankproject.commons.model.{InboundAccountCommon, _}
+import com.openbankproject.commons.model._
 import javax.annotation.Resource
 import org.springframework.beans.factory.config.ConfigurableBeanFactory
 import org.springframework.context.annotation.Scope
@@ -31,31 +31,59 @@ class SouthSideActor  extends Actor  {
     """.stripMargin
 
   def receive = {
-    case OutboundGetBanks(adapterCallContext) => sender ! InboundGetBanks(bankService.getBanks(), adapterCallContext)
-    case OutboundGetBank(bankId, adapterCallContext) => sender ! InboundGetBank(this.bankService.getBankById(bankId), adapterCallContext)
-    case OutboundGetAdapterInfo(_, adapterCallContext) => sender ! InboundAdapterInfo("akka-springBoot", "01", "friday", new Date().toString, adapterCallContext)
-    case OutboundGetBankAccountsByUsername(username, adapterCallContext) => sender ! InboundGetBankAccountsByUsername(
-      List(InboundAccountCommonCommons(
-        errorCode = "",
-        bankId = "bankIdtob001",
-        branchId = "thatBranch",
-        accountId = "1",
-        accountNumber = "",
-        accountType = "",
-        balanceAmount = "100",
-        balanceCurrency = "EUR",
-        owners = List("Simon"),
-        viewsToGenerate = List("Owner", "Accountant", "Auditor"),
-        bankRoutingScheme = "",
-        bankRoutingAddress = "",
-        branchRoutingScheme = "",
-        branchRoutingAddress = "",
-        accountRoutingScheme = "",
-        accountRoutingAddress = ""
-      )), adapterCallContext)
-      
-    case OutboundCheckBankAccountExists(bankId,accountId,adapterCallContext) => sender ! InboundCheckBankAccountExists(bankService.getAccountById(bankId,adapterCallContext.get.adapterAuthInfo.get.userId,accountId),adapterCallContext)
-    case OutboundGetCoreBankAccounts(bankIdAccountIds, adapterCallContext) => sender ! InboundGetCoreBankAccounts(bankService.getCoreBankAccounts("bankId002", adapterCallContext.get.adapterAuthInfo.get.userId), adapterCallContext)
+    case OutBoundGetBanksFuture(adapterCallContext) => sender ! InBoundGetBanksFuture(
+      adapterCallContext,
+      List(BankCommons( //TODO  This should come from `bankService.getBanks`
+        bankId = BankId("bankIdtob001"),
+        shortName = "The Royal Bank of Scotland",
+        fullName = "The Royal Bank of Scotland",
+        logoUrl = "http://www.red-bank-shoreditch.com/logo.gif",
+        websiteUrl = "http://www.red-bank-shoreditch.com",
+        bankRoutingScheme = "OBP",
+        bankRoutingAddress = "rbs",
+        swiftBic = "String",
+        nationalIdentifier = "String"
+      )
+      )
+    )
+                                                                                      
+    case OutBoundGetBankFuture(adapterCallContext, bankId) => sender ! InBoundGetBankFuture(
+      adapterCallContext,
+      BankCommons( //TODO This should come from `bankService.getBanks`
+        bankId = bankId,
+        shortName = "The Royal Bank of Scotland",
+        fullName = "The Royal Bank of Scotland",
+        logoUrl = "http://www.red-bank-shoreditch.com/logo.gif",
+        websiteUrl = "http://www.red-bank-shoreditch.com",
+        bankRoutingScheme = "OBP",
+        bankRoutingAddress = "rbs",
+        swiftBic = "String",
+        nationalIdentifier = "String"
+      )
+      )
+//    case OutboundGetAdapterInfo(_, adapterCallContext) => sender ! InboundAdapterInfo("akka-springBoot", "01", "friday", new Date().toString, adapterCallContext)
+//    case OutboundGetBankAccountsByUsername(username, adapterCallContext) => sender ! InboundGetBankAccountsByUsername(
+//      List(InboundAccountCommonCommons(
+//        errorCode = "",
+//        bankId = "bankIdtob001",
+//        branchId = "thatBranch",
+//        accountId = "1",
+//        accountNumber = "",
+//        accountType = "",
+//        balanceAmount = "100",
+//        balanceCurrency = "EUR",
+//        owners = List("Simon"),
+//        viewsToGenerate = List("Owner", "Accountant", "Auditor"),
+//        bankRoutingScheme = "",
+//        bankRoutingAddress = "",
+//        branchRoutingScheme = "",
+//        branchRoutingAddress = "",
+//        accountRoutingScheme = "",
+//        accountRoutingAddress = ""
+//      )), adapterCallContext)
+//      
+//    case OutboundCheckBankAccountExists(bankId,accountId,adapterCallContext) => sender ! InboundCheckBankAccountExists(bankService.getAccountById(bankId,adapterCallContext.get.adapterAuthInfo.get.userId,accountId),adapterCallContext)
+//    case OutboundGetCoreBankAccounts(bankIdAccountIds, adapterCallContext) => sender ! InboundGetCoreBankAccounts(bankService.getCoreBankAccounts("bankId002", adapterCallContext.get.adapterAuthInfo.get.userId), adapterCallContext)
 //    case OutboundGetCoreBankAccounts(bankIdAccountIds, adapterCallContext) => sender ! InboundGetCoreBankAccounts(getCoreBankAccountsAllBanks(bankIdAccountIds, adapterCallContext.get), adapterCallContext)
   }
   

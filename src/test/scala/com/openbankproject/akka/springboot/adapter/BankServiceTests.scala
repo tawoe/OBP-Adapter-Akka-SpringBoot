@@ -16,7 +16,7 @@ class BankServiceTests {
 
   @Test
   def getBanksTest = {
-    val accounts = this.bankService.getCoreBankAccounts("bankId", "userId")
-    println(accounts)
+//    val accounts = this.bankService.getCoreBankAccounts("bankId", "userId")
+//    println(accounts)
   }
 }
