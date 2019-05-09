@@ -32,7 +32,8 @@ class SouthSideActor  extends Actor  {
 
   def receive = {
     case OutBoundGetBanksFuture(adapterCallContext) => sender ! InBoundGetBanksFuture(
-      adapterCallContext,
+      InboundAdapterCallContext(adapterCallContext.correlationId, adapterCallContext.sessionId, adapterCallContext.generalContext),
+      Status("ok", List(InboundStatusMessage("","","",""))),
       List(BankCommons( //TODO  This should come from `bankService.getBanks`
         bankId = BankId("bankIdtob001"),
         shortName = "The Royal Bank of Scotland",
@@ -48,7 +49,8 @@ class SouthSideActor  extends Actor  {
     )
                                                                                       
     case OutBoundGetBankFuture(adapterCallContext, bankId) => sender ! InBoundGetBankFuture(
-      adapterCallContext,
+      InboundAdapterCallContext(adapterCallContext.correlationId, adapterCallContext.sessionId, adapterCallContext.generalContext),
+      Status("ok", List(InboundStatusMessage("","","",""))),
       BankCommons( //TODO This should come from `bankService.getBanks`
         bankId = bankId,
         shortName = "The Royal Bank of Scotland",
